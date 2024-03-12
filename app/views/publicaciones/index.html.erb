@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Social - Publicaciones</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <style>
+    /* Estilos para el modo nocturno */
+    body.dark-mode {
+      background-color: #343a40;
+      color: #fff;
+    }
+    .dark-mode .publicacion,
+    .dark-mode .categorias {
+      background-color: #454d55;
+      border-color: #606c76;
+      color: #fff;
+    }
+    /* Estilos para las publicaciones */
+    .publicacion {
+      background-color: #fff;
+      border: 1px solid #dddfe2;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .publicacion img {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+    .publicacion h2 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    .publicacion p {
+      margin-bottom: 0;
+    }
+    /* Estilos para las categorías */
+    .categorias {
+      background-color: #f8f9fa;
+      border: 1px solid #dddfe2;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .categorias h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Columna de Categorías -->
+      <div class="col-md-4 mb-4">
+        <div class="categorias">
+          <h2>Categorías</h2>
+          <%= render partial: 'category', collection: @categories %>
+        </div>
+      </div>
+      <!-- Columna de Publicaciones -->
+      <div class="col-md-8">
+        <h1>Publicaciones</h1>
+
+        <!-- Interruptor de modo nocturno -->
+        <div class="custom-control custom-switch mb-4">
+          <input type="checkbox" class="custom-control-input" id="modoNocturnoSwitch">
+          <label class="custom-control-label" for="modoNocturnoSwitch">Modo Nocturno</label>
+        </div>
+
+        <!-- Lista de Publicaciones -->
+        <% @publicaciones.each do |publicacion| %>
+          <div class="publicacion">
+            <%= link_to publicacion_path(publicacion.id), data: { turbo_frame: '_top' } do %>
+              <% if publicacion.imagen.attached? %>
+                <%= image_tag publicacion.imagen, class: "img-fluid", alt: "Imagen de la publicación" %>
+              <% end %>
+              <h2><%= publicacion.titulo %></h2>
+            <% end %>
+            <p><small class="text-muted"><%= publicacion.created_at.strftime("%d/%m/%Y %H:%M") %></small></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (opcional, si lo necesitas) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Función para cambiar el modo entre claro y oscuro
+    $('#modoNocturnoSwitch').change(function() {
+      $('body').toggleClass('dark-mode');
+    });
+  </script>
+</body>
+</html>

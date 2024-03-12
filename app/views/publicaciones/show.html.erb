@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h1><%=@publicacion.titulo%></h1>
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            <% if @publicacion.imagen.attached? %>
+              <%= image_tag @publicacion.imagen, width: 300, class: "img-fluid rounded mb-3" %>
+            <% end %>
+          </div>
+          #<h2 class="text-center"><%= @publicacion.titulo %></h2>
+          <p class="text-center"><%= @publicacion.descripcion %></p>
+          <p class="text-center"><small class="text-muted">Publicado el <%= @publicacion.created_at.strftime("%d/%m/%Y %H:%M") %></small></p>
+
+          <div class="text-center mt-4">
+            <%= link_to editar_publicacion_path(@publicacion), class: "btn btn-warning me-3", data: { turbo_frame: '_top' } do %>
+              <i class="bi bi-pencil-fill me-1"></i> Editar
+            <% end %>
+
+            <%= link_to eliminar_publicacion_path(@publicacion), class: "btn btn-danger", data: {turbo_method: :delete, turbo_confirm: '¿Estás seguro?' } do %>
+              <i class="bi bi-trash-fill me-1"></i> Eliminar
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!---
+    <%#
+        <br>
+        <%= image_tag @publicacion.imagen, width: 200 if @publicacion.imagen.attached? %>
+        <h1><%= @publicacion.titulo %></h1>
+        <span><%= @publicacion.descripcion %></span>
+        <p><%= @publicacion.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+
+        <%= link_to "<i class='bi bi-pencil-square'></i>".html_safe, editar_publicacion_path(@publicacion) %>
+
+        <%= link_to "<i class='bi bi-trash'></i>".html_safe, eliminar_publicacion_path(@publicacion), data: {turbo_method: :delete, turbo_confirm: 'Estás seguro?' } %>
+
+        
+    %>
+--->
